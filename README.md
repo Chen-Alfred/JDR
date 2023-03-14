@@ -2,18 +2,6 @@
 內容：JDR 工具簡介 (Job Dependency Runner)
 
 ---
-[目錄](https://hackmd.io/Y7i9O4hCQu6xOJ94__PhNg)
-
-[教學筆記 01：編碼、檔案、斷行字元、Excel、其他基礎知識介紹](https://hackmd.io/7-FajauqT62vXpxOViWzBw)
-[教學筆記 02：Linux 指令介紹 ](https://hackmd.io/9D_WXaT3TsCaBrsOQKYdTw)
-[教學筆記 03：awk 指令介紹](https://hackmd.io/PHZRjtQMRi2v9Z-u6bD6Tg)
-[教學筆記 04：文件圖表表達方式的經驗分享](https://hackmd.io/xVM9lnFBSneA6uhIzdkYyA)
-[教學筆記 05：以 C 語言開發資料庫存取程式 (ECPG)](https://hackmd.io/4jh_5A51TfieovVipQqoXA)
-[推薦書籍](https://hackmd.io/t7T5FxfmT3Kih-b7PRUZrA)
-[補充教材](https://hackmd.io/w-BNpl_TSuysG4_qaGtmFg)
-個人專案：JDR 工具簡介 (Job Dependency Runner)
-
----
 
 **※ 前言：**
 
@@ -44,21 +32,29 @@ JDR (Job Dependency Runner) 是本專案所開發的一套資料治理小工具�
 
 歡迎大家使用這套工具，但工具的設計奠基於我個人之前的開發經驗以及自己的想像，因此如果有人覺得不好使用、不方便、不夠彈性的地方，歡迎將這些問題回饋給我，讓我可以做為改進的參考。
 
+---
+
+## 二、使用套件 & 授權 & 連結：
+
 本專案的開發，最主要使用下列 python 套件：
 * PyQt：視窗程式設計 (GNU GPL 授權)
 * graphviz：繪製流程圖 (EPL 授權)
 * networkx：graph 的操作 (BSD 授權)
+* pandas：資料讀取與操作 (BSD 授權)
+* matplotlib：產生圖表 (BSD 授權)
 
-針對本專案軟體授權的選擇，雖然我個人比較意屬最自由的 BSD 授權，但因為 PyQt 套件本身是比較嚴格的 GNU GPL 授權，所以我也只好跟著 GPL。
+針對本專案軟體授權的選擇，雖然我個人比較偏好最自由的 BSD 授權，但因為 PyQt 套件本身是比較嚴格的 GNU GPL 授權，所以我也只好跟著 GPL。
 
-工具的連結如下：
-
+本專案相關連結如下：
+* 原始碼：https://github.com/Chen-Alfred/JDR
+* 執行檔：https://github.com/Chen-Alfred/JDR/tree/main/dist
+* 說明文件：https://hackmd.io/GK-JknSJRnejy1CsYF5mcg
 
 ---
 
 ## 二、JDR 工具的運作架構：
  
-![](https://i.imgur.com/BHxZVsY.png =70%x70%)
+![](https://i.imgur.com/BHxZVsY.png)
 
 **<center>JDR 工具的運作架構與相關角色</center>**
 
@@ -160,13 +156,13 @@ JDR 工具運作架構的相關角色說明如下：
 
 將開始與結束時間皆設定為同一日 (本例為 2023-01-01)，則可以得到下圖，此時這 4 支作業執行的順序必須依照相依性的設定：Job1 執行完畢後才能執行 Job2 與 Job3，待 Job2 與 Job3 兩者皆執行完畢後才能執行 Job4。
 
-![](https://i.imgur.com/EXL6PPM.png =60%x60%)
+![](https://i.imgur.com/EXL6PPM.png)
 
 
 **4. 範例四 (作業間相依性 + 作業內相依性)**：
 同樣使用範例三的作業清單文件設定，但將開始與結束時間限定在 2023-01-01 至 2023-01-02 ，則可以得到下圖，此時除了有作業間相依性，也有作業內相依性。
 
-![](https://i.imgur.com/pwxjPuv.png =80%x80%)
+![](https://i.imgur.com/pwxjPuv.png)
 
 
 ---
@@ -259,13 +255,13 @@ JDR 工具的介面外觀如下圖，主要由「設定區」、「項目導航�
     * 讀取作業清單文件，並指定 sheet 名稱。
     * 當上述設定完成後，可在主要操作區中產生流程圖。產製過程中會協助剔錯，將錯誤的設定顯示於 Log 區。
     * 可以自行設定項目在各種狀態的顏色，並可恢復為預設值。
-  ![](https://i.imgur.com/6L75dAX.png =50%x50%)
+  ![](https://i.imgur.com/6L75dAX.png)
 
   * DB (資料庫連線)：
     * 控制表資料庫連線設定：包含連線 IP、帳號、密碼、連接埠、資料庫名稱。
     * 控制表設定：由於使用者用來作為控制表的名稱與欄位不一定會與本專案相同，因此提供自行設定的彈性。
     * **注意：目前 JDR 工具僅支援 PostgreSQL 作為控制表資料庫。**
-  ![](https://i.imgur.com/RAz4mdc.png =50%x50%)
+  ![](https://i.imgur.com/RAz4mdc.png)
 
   * Function (功能)：
     * Run On Time (按時執行)：
@@ -282,10 +278,10 @@ JDR 工具的介面外觀如下圖，主要由「設定區」、「項目導航�
     因為使用者可能會利用其他方式執行作業，因此提供本功能，讓使用者能夠依據控制表的執行資訊，更新主要操作區上各項目的狀態。
     * Save SVG (儲存 SVG)：
     將主要操作區上的圖形儲存為 SVG 圖檔。
-  ![](https://i.imgur.com/yeatnzo.png =50%x50%)
+  ![](https://i.imgur.com/yeatnzo.png)
 
   * Information (資訊)：
-    ![](https://i.imgur.com/4pH2lUR.png =50%x50%)
+    ![](https://i.imgur.com/4pH2lUR.png)
     * 作業資訊之定義：
 
     | 編號  | 中文名詞 | 英文名詞 | 說明 |
@@ -322,7 +318,7 @@ JDR 工具的介面外觀如下圖，主要由「設定區」、「項目導航�
       當主要操作區的項目數量越多、流程越複雜時，想要尋找一個特定項目會變得更加麻煩，因此提供本功能讓使用者便於尋找畫面上的項目。當點選一項目的按鈕時，該項目就會顯示在主要操作區的「最左上角」。
     * 協助查看項目的狀態：
       按鈕的顏色與主要操作區的項目顏色相同，因此可以用來快速確認所有項目的狀態。
-  ![](https://i.imgur.com/noIZEbT.png =50%x50%)
+  ![](https://i.imgur.com/noIZEbT.png)
 
 
 3. 主要操作區：
@@ -356,14 +352,14 @@ JDR 工具的介面外觀如下圖，主要由「設定區」、「項目導航�
       * 作業清單文件的設定是否有誤
       * 產製流程圖時的其他剔錯資訊
     
-![](https://i.imgur.com/U3zPxth.png =70%x70%)
+![](https://i.imgur.com/U3zPxth.png)
 
 
 
 ### (2).使用案例示範
 1. 語言切換：
 JDR 工具提供多國語言支援，目前支援繁體中文與英文，預設為英文。調整設定區中的 Language 下拉式選單即可。
-![](https://i.imgur.com/vKtsC7R.png =50%x50%)
+![](https://i.imgur.com/vKtsC7R.png)
 
 2. 針對單一(或部分)項目的功能操作：
 假設一份作業清單文件設定如下：
@@ -461,7 +457,7 @@ JDR 工具提供多國語言支援，目前支援繁體中文與英文，預設�
 
 
 ### (3).利用「Run On Time」做為排程工具
-![](https://i.imgur.com/p8PG5Cm.png  =50%x50%)
+![](https://i.imgur.com/p8PG5Cm.png)
 
 在設定區的「Function (功能)」頁籤中，有個「Run On Time (按時執行)」核取方塊，用來限制項目在執行時是否需要依照本身的計畫執行時間來按時執行。
 
@@ -507,7 +503,7 @@ JDR 工具提供多國語言支援，目前支援繁體中文與英文，預設�
 * Column Name (Actual End Datetime)：設定為 act_edt2
 * Column Name (Data Number)：設定為 data_num2
 
-![](https://i.imgur.com/6GDIFWU.png =50%x50%)
+![](https://i.imgur.com/6GDIFWU.png)
 
 設定後再產製流程圖，便可以順利執行：
 
@@ -545,7 +541,7 @@ JDR 工具提供多國語言支援，目前支援繁體中文與英文，預設�
 
 Log 區的訊息如下：
 
-![](https://i.imgur.com/beoHA3H.png =70%x70%)
+![](https://i.imgur.com/beoHA3H.png)
 
 Log 內容可以找到這些錯誤：
 * [Error]：Job5 未填「執行頻率」欄位
@@ -562,10 +558,4 @@ JDR 工具本身有為各種執行狀態提供預設的顏色，但如果使用�
 下面的例子示範將 success 狀態的顏色由綠色改為藍色，然後再改回預設值：
 
 ![](https://i.imgur.com/aclyPBt.gif)
-
----
-
-## 七、JDR工具的安裝方式
-下載網址：
-環境設置：
 
